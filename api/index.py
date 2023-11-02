@@ -1,9 +1,10 @@
 from flask import Flask, jsonify, request
 import requests
-from flask_cors import CORS
+# from flask_cors import CORS
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/api_vinfo/*": {"origins": "*"}})
+
+# cors = CORS(app, resources={r"/api_vinfo/*": {"origins": "*"}})
 
 
 
@@ -88,6 +89,16 @@ def get_vehicle_details(vehnum):
 
 
 # CORS(app)
+
+
+
+@app.route('/')
+def home():
+    return 'Hey manish'
+
+@app.route('/about')
+def about():
+    return 'About'
 @app.route('/<string:vehNum>', methods=['GET', 'POST'])
 def home(vehNum):
   if request.method == 'GET':
@@ -115,13 +126,4 @@ def home(vehNum):
     response.headers.add('Access-Control-Allow-Origin', '*')
 
     return response
-
-
-@app.route('/')
-def home():
-    return 'Hey manish'
-
-@app.route('/about')
-def about():
-    return 'About'
 
