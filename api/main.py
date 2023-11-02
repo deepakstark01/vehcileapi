@@ -80,39 +80,33 @@ def get_vehicle_details(vehnum):
 
 
 
-# CORS(app)
-@app.route('/<string:vehNum>', methods=['GET', 'POST'])
-def home(vehNum):
-  if request.method == 'GET':
-    # vehNum = request.args.get('vehNum')
-    if not vehNum:
-      return jsonify(
-        {"error":
-         "Please provide a vehicle Number in the request query."}), 400
-    number = vehNum.upper()
-    header_element, challans = getChallan(number)
-    data=""
-    # Prepare the response data
-    if get_vehicle_details(vehNum) != "no":
-      data=get_vehicle_details(vehNum) 
-    response_data = {
-      'vehNum': number,
-      'header_element': header_element,
-      'challans': challans,
-      'vehicleDetails': data
-    }
+# # CORS(app)
+# @app.route('/<string:vehNum>', methods=['GET', 'POST'])
+# def home(vehNum):
+#   if request.method == 'GET':
+#     # vehNum = request.args.get('vehNum')
+#     if not vehNum:
+#       return jsonify(
+#         {"error":
+#          "Please provide a vehicle Number in the request query."}), 400
+#     number = vehNum.upper()
+#     header_element, challans = getChallan(number)
+#     data=""
+#     # Prepare the response data
+#     if get_vehicle_details(vehNum) != "no":
+#       data=get_vehicle_details(vehNum) 
+#     response_data = {
+#       'vehNum': number,
+#       'header_element': header_element,
+#       'challans': challans,
+#       'vehicleDetails': data
+#     }
 
-    # Create the response with CORS headers
-    response = jsonify(response_data)
-    # response.headers.add('Access-Control-Allow-Credentials', 'true')
-    response.headers.add('Access-Control-Allow-Origin', '*')
+#     # Create the response with CORS headers
+#     response = jsonify(response_data)
+#     # response.headers.add('Access-Control-Allow-Credentials', 'true')
+#     response.headers.add('Access-Control-Allow-Origin', '*')
 
-    return response
-
-
-@app.route('/', methods=['GET', 'POST'])
-def index():
-  return "Hey manish"
+#     return response
 
 
-app.run(host='0.0.0.0', port=81)

@@ -7,7 +7,7 @@ cors = CORS(app, resources={r"/api_vinfo/*": {"origins": "*"}})
 
 @app.route('/')
 def home():
-    return 'Hello, World!'
+    return 'Hello, Manish!'
 
 @app.route('/about')
 def about():
