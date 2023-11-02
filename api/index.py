@@ -94,7 +94,7 @@ def get_vehicle_details(vehnum):
 
 @app.route('/')
 def index():
-    return 'Hey manish'
+    return 'Hello you can visit to use example of these api https://vehcileapi.vercel.app/DL8CX5463  '
 
 @app.route('/about')
 def about():
