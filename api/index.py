@@ -93,7 +93,7 @@ def get_vehicle_details(vehnum):
 
 
 @app.route('/')
-def home():
+def index():
     return 'Hey manish'
 
 @app.route('/about')
