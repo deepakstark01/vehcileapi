@@ -9,27 +9,13 @@ app = Flask(__name__)
 
 
 def getChallan(vehNum):
-  url = f"https://web.cuvora.com/car/web/details/challan/?vehicleNum={vehNum}"
-  # https://web.cuvora.com/car/web/details/challan/?vehicleNum=DL9CX5463
-  headers = {
-    "User-Agent":
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0",
-    "Accept": "application/json, text/plain, */*",
-    "Accept-Language": "en-US,en;q=0.5",
-    "src": "car-info_web",
-    "appVersion": "251",
-    "deviceId": "36378a-d18d-3500-7b3b-35d30d35bb6",
-    "userId": "64ba5cf67fc4493310ec330g",
-    "Sec-Fetch-Dest": "empty",
-    "Sec-Fetch-Mode": "cors",
-    "Sec-Fetch-Site": "cross-site"
-  }
   try:
-    response = requests.get(url, headers=headers)
-    response.raise_for_status()
-    response_data = response.json()
-    header_element = response_data["data"]["headerElement"]
-    challans = response_data["data"]["challans"]
+    response = requests.get(
+    f'https://www.carinfo.app/_next/data/MuceL2U-BNrimc0ehV-rh/challan-details/{vehNum}.json'
+    )
+    data  = response.json()
+    header_element = data['pageProps']['challanDetailsResponse']['data']['headerElement']
+    challans =  data['pageProps']['challanDetailsResponse']['data']['challans']
     return header_element, challans
   except requests.exceptions.RequestException as e:
     print("Error making the request:", e)
@@ -110,11 +96,15 @@ def home(vehNum):
     number = vehNum.upper()
     header_element, challans = getChallan(number)
     data=""
+    onwer_name=""
     # Prepare the response data
     if get_vehicle_details(vehNum) != "no":
-      data=get_vehicle_details(vehNum) 
+      vdata=get_vehicle_details(vehNum)
+      onwer_name = vdata['user']['name']
+      data = vdata['vehicle']
     response_data = {
       'vehNum': number,
+      'onwer_name': onwer_name,
       'header_element': header_element,
       'challans': challans,
       'vehicleDetails': data
@@ -126,4 +116,3 @@ def home(vehNum):
     response.headers.add('Access-Control-Allow-Origin', '*')
 
     return response
-
